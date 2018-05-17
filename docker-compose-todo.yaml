@@ -1,0 +1,22 @@
+version: "3"
+services:
+  swarm-onlyoffice-front:
+    image: onlyoffice-front
+    ports:
+      - "3004:3004"
+    environment:
+      - DOCSERVER_URL=http://localhost:9004/
+      - FRONTEND_PORT=3004
+      - NODE_ENV=development
+    expose:
+      - "3004"
+  swarm-onlyoffice-docserver:
+    image: onlyoffice/documentserver
+    links:
+      - swarm-onlyoffice-front
+    ports:
+      - "9004:80"
+    environment:
+      - SWARM_ENV=1
+    expose:
+      - "80"
